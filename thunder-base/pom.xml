@@ -4,9 +4,54 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.example</groupId>
+    <groupId>com.thunder.store</groupId>
     <artifactId>thunder-base</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>base-api</module>
+        <module>base-core</module>
+        <module>base-dao</module>
+    </modules>
+    <packaging>pom</packaging>
+    <description>结构基础 module of thunder-store</description>
+
+    <parent>
+        <groupId>com.thunder</groupId>
+        <artifactId>thunder-parent</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <profiles>
+        <!--sit环境-->
+        <profile>
+            <id>sit</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <nbp-dependencies.version>0.0.1-SNAPSHOT</nbp-dependencies.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <nbp-dependencies.version>0.0.1.RELEASE</nbp-dependencies.version>
+            </properties>
+        </profile>
+    </profiles>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
 
 
 </project>
