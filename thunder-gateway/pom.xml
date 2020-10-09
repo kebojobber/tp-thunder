@@ -8,5 +8,10 @@
     <artifactId>thunder-gateway</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <parent>
+        <groupId>com.thunder</groupId>
+        <artifactId>thunder-dependencies</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
 
 </project>
