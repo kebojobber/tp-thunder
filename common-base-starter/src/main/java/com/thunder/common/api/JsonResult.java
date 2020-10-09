@@ -1,8 +1,8 @@
 package com.thunder.common.api;
 
-import lombok.AllArgsConstructor;
+import com.thunder.common.exception.CommonErrorInterface;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+
 
 /**
  * @description:
@@ -10,53 +10,64 @@ import lombok.NoArgsConstructor;
  * @create: 2020/9/8
  **/
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class JsonResult<T> {
 
-    private long code;
+    private String code;
     private String message;
     private T data;
 
+    private JsonResult(String code, String message, T data) {
+        this.code = code;
+        this.message = message;
+        this.data = data;
+    }
+
+    private JsonResult() {
+
+    }
+
     public static <T> JsonResult<T> success() {
-        return new JsonResult<>(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getMessage(), null);
+        return new JsonResult<T>(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getMessage(), null);
     }
 
     public static <T> JsonResult<T> success(T data) {
-        return new JsonResult<>(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getMessage(), data);
+        return new JsonResult<T>(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getMessage(), data);
     }
 
-    public static <T> JsonResult<T> success(T data, String message) {
-        return new JsonResult<>(ResultCode.SUCCESS.getCode(), message, data);
-    }
-
-    public static <T> JsonResult<T> failed(IErrorCode errorCode) {
-        return new JsonResult<T>(errorCode.getCode(), errorCode.getMessage(), null);
-    }
-
-    public static <T> JsonResult<T> failed(IErrorCode errorCode, String message) {
+    public static <T> JsonResult<T> failed(CommonErrorInterface errorCode, String message) {
         return new JsonResult<T>(errorCode.getCode(), message, null);
     }
 
-    public static <T> JsonResult<T> failed(String message) {
-        return new JsonResult<T>(ResultCode.FAIL.getCode(), message, null);
+
+    public static <T> JsonResult<T> failed(CommonErrorInterface iErrorCode) {
+        JsonResult<T> jsonResult = new JsonResult<>();
+        jsonResult.setCode(iErrorCode.getCode());
+        jsonResult.setMessage(iErrorCode.getMessage());
+        return jsonResult;
     }
 
-    public static <T> JsonResult<T> failed() {
-        return failed(ResultCode.FAIL);
+    public String getCode() {
+        return this.code;
     }
 
-    public static <T> JsonResult<T> unauthorized() {
-        return new JsonResult<T>(ResultCode.UNAUTHORIZED.getCode(), ResultCode.UNAUTHORIZED.getMessage(), null);
+    public String getMessage() {
+        return this.message;
     }
 
-    public static <T> JsonResult<T> validateFail(String message) {
-        return new JsonResult<T>(ResultCode.VALIDATE_FAILED.getCode(), message, null);
+    public T getData() {
+        return this.data;
     }
 
+    public void setCode(final String code) {
+        this.code = code;
+    }
 
-    public static <T> JsonResult<T> forbidden() {
-        return new JsonResult<T>(ResultCode.FORBIDDEN.getCode(), ResultCode.FORBIDDEN.getMessage(), null);
+    public void setMessage(final String message) {
+        this.message = message;
+    }
+
+    public void setData(final T data) {
+        this.data = data;
     }
 
 }

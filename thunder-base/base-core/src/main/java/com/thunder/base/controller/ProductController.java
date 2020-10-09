@@ -1,6 +1,7 @@
 package com.thunder.base.controller;
 
 import com.thunder.base.event.MsgEventPublisher;
+import com.thunder.common.api.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +21,9 @@ public class ProductController {
     MsgEventPublisher msgEventPublisher;
 
     @GetMapping("/get")
-    public void getById() {
+    public JsonResult<Object> getById() {
         msgEventPublisher.publish("hello word");
+        return JsonResult.success();
     }
 
 }
