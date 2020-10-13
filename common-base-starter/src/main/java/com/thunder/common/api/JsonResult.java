@@ -38,6 +38,9 @@ public class JsonResult<T> {
         return new JsonResult<T>(errorCode.getCode(), message, null);
     }
 
+    public static <T> JsonResult<T> failed() {
+        return new JsonResult<T>(ResultCode.FAIL.getCode(), ResultCode.FAIL.getMessage(), null);
+    }
 
     public static <T> JsonResult<T> failed(CommonErrorInterface iErrorCode) {
         JsonResult<T> jsonResult = new JsonResult<>();
