@@ -1,12 +1,36 @@
-server:
-  port: 8088 # 端口
+# Configure this Discovery Server
+eureka:
+  instance:
+    status-page-url: http://${spring.cloud.client.ipAddress}:${server.port}/swagger-ui.html
+    # hostname: localhost
+    preferIpAddress: true
+  client:  # Not a client, don't register with yourself
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://localhost:1111/eureka/
+
+  server:
+    enable-self-preservation: false
+    #eviction-interval-timer-in-ms: 300
+
 spring:
   application:
-    name: eurekaserverdemo # 应用名称，会在Eureka中显示
-eureka:
-  client:
-    register-with-eureka: false # 是否注册自己的信息到EurekaServer，默认是true
-    fetch-registry: false # 是否拉取其它服务的信息，默认是true
-    service-url: # EurekaServer的地址，现在是自己的地址，如果是集群，需要加上其它Server的地址。
-      defaultZone: http://127.0.0.1:8088/eureka
+    name: eureka
 
+server:
+  port: 1111
+# HTTP (Tomcat) port
+
+#<2>
+# end::configuration-eureka[]
+
+# tag::configuration-ui-hystrix[]
+spring.boot.admin.routes.endpoints: env,metrics,dump,jolokia,info,configprops,trace,logfile,refresh,flyway,liquibase,heapdump,loggers,auditevents,hystrix.stream,activiti
+# end::configuration-ui-hystrix[]
+
+# tag::configuration-ui-turbine[]
+spring.boot.admin.turbine:
+  clusters: default
+  location: turbine  #<1>
+# end::configuration-ui-turbine[]
