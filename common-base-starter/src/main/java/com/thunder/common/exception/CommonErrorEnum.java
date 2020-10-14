@@ -37,9 +37,4 @@ public enum CommonErrorEnum implements CommonErrorInterface {
     public String getMessage() {
         return this.message;
     }
-
-    @Override
-    public String getSubCode() {
-        return this.subCode;
-    }
 }

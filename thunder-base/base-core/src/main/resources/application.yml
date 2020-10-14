@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/bus_thunder?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: admin123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  application:
+    name: thunder-base
+server:
+  port: 8001
+
+
+mybatis:
+  config-location: classpath:mybatis/mybatis-config.xml
+
+eureka:
+  instance:
+    preferIpAddress: true
+    hostname: ${spring.cloud.client.ip-address}
+    #status-page-url: http://${spring.cloud.client.ip-address}:${server.port}/swagger-ui.html#/
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:1111/eureka/
