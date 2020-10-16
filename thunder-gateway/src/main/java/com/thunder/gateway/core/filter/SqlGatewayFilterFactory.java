@@ -6,7 +6,7 @@ import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFac
 import org.springframework.stereotype.Component;
 
 /**
- * @description:
+ * @description: sql注入filter
  * @author: lim14905
  * @create: 2020/10/14
  **/

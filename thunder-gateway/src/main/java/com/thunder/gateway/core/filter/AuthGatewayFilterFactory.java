@@ -7,7 +7,7 @@ import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFac
 import org.springframework.stereotype.Component;
 
 /**
- * @description:
+ * @description: 用户认证filter
  * @author: lim14905
  * @create: 2020/10/14
  **/
