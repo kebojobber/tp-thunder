@@ -1,5 +1,6 @@
 package com.thunder.gateway.core.filter;
 
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
@@ -30,12 +31,18 @@ public class RBLGatewayFilterFactory extends AbstractGatewayFilterFactory<RBLGat
             return chain.filter(exchange).then(Mono.fromRunnable(() -> {
                 log.info("=======invoke RBL filter=======");
                 String path = exchange.getRequest().getURI().getPath();
-                //Manipulate the response in some way
+                if (config.matchBlackList(path)) {
+                    log.info("black path:{}", path);
+                    throw new RuntimeException();
+                }
+                if (config.matchWhiteList(path)) {
+                    log.info("white path:{}", path);
+                }
             }));
         };
     }
 
-
+    @Data
     public static class Config {
 
         private String blackListUrl;

@@ -1,0 +1,41 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: THUNDER-BASE
+          uri: lb://THUNDER-BASE
+          predicates:
+            - Path=/api/base/**
+          filters:
+            - StripPrefix=1
+        - id: THUNDER-USER
+          uri: lb://THUNDER-USER
+          predicates:
+            - Path=/api/user/**
+          filters:
+            - StripPrefix=1
+      default-filters:
+        - args:
+            blackListUrl: /echo222/**
+            whiteListUrl: /api/base/**
+            name: RBL
+        - Auth
+        - args:
+            includeQueryParams: true
+            includeBody: true
+            name: Sql
+
+
+server:
+  port: 8000
+  servlet:
+    context-path: /
+eureka:
+  instance:
+    preferIpAddress: true
+    hostname: ${spring.cloud.client.ip-address}
+    #status-page-url: http://${spring.cloud.client.ip-address}:${server.port}/swagger-ui.html#/
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:1111/eureka/
